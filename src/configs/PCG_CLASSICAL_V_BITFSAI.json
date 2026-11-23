@@ -1,0 +1,33 @@
+{
+    "config_version": 2,
+    "determinism_flag": 0,
+    "solver": {
+        "preconditioner": {
+            "print_grid_stats": 1,
+            "algorithm": "CLASSICAL",
+            "selector": "PMIS",
+            "interpolator": "D2",
+            "solver": "AMG",
+            "smoother": {
+                "solver": "BITFSAI",
+                "bitfsai_mode": "int4_split",
+                "bitfsai_omega": 0.72
+            },
+            "presweeps": 1,
+            "postsweeps": 1,
+            "coarsest_sweeps": 2,
+            "max_iters": 1,
+            "cycle": "V",
+            "scope": "amg"
+        },
+        "solver": "PCG",
+        "print_solve_stats": 1,
+        "obtain_timings": 1,
+        "max_iters": 1000,
+        "monitor_residual": 1,
+        "convergence": "RELATIVE_INI_CORE",
+        "scope": "main",
+        "tolerance": 1e-8,
+        "norm": "L2"
+    }
+}

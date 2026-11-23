@@ -15,7 +15,7 @@ target_include_directories(amgx_libs PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../inclu
 
 set(AMGX_INCLUDES ../include)
 
-set(tests_all ${tests_all} testframework.cu test_utils.cu unit_test.cu)
+set(tests_all ${tests_all} testframework.cu test_utils.cu unit_test.cu tests/bitfsai_smoother.cu)
 
 add_library(amgx_tests_libs OBJECT ${tests_all})
 
@@ -88,6 +88,7 @@ install(FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/configs/PCG_AGGREGATION_JACOBI.json"
     "${CMAKE_CURRENT_SOURCE_DIR}/configs/PCG_CLASSICAL_F_JACOBI.json"
     "${CMAKE_CURRENT_SOURCE_DIR}/configs/PCG_CLASSICAL_V_JACOBI.json"
+    "${CMAKE_CURRENT_SOURCE_DIR}/configs/PCG_CLASSICAL_V_BITFSAI.json"
     "${CMAKE_CURRENT_SOURCE_DIR}/configs/PCG_CLASSICAL_W_JACOBI.json"
     "${CMAKE_CURRENT_SOURCE_DIR}/configs/PCG_DILU.json"
     "${CMAKE_CURRENT_SOURCE_DIR}/configs/PCG_NOPREC.json"

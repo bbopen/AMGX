@@ -33,6 +33,7 @@
 #include <solvers/gauss_seidel_solver.h>
 //#include <solvers/jacobi_solver.h>
 #include <solvers/jacobi_l1_solver.h>
+#include <solvers/bitfsai_solver.h>
 //#include <solvers/jacobi_nocusp_solver.h>
 #include <solvers/kpz_polynomial_solver.h>
 #include <solvers/polynomial_solver.h>
@@ -107,6 +108,7 @@ inline void registerClasses()
     SolverFactory<TConfig>::registerFactory("BICGSTAB", new BiCGStab_SolverFactory<TConfig>);
     SolverFactory<TConfig>::registerFactory("FGMRES", new FGMRES_SolverFactory<TConfig>);
     SolverFactory<TConfig>::registerFactory("JACOBI_L1", new JacobiL1SolverFactory<TConfig>);
+    SolverFactory<TConfig>::registerFactory("BITFSAI", new BitFSAISolverFactory<TConfig>);
     SolverFactory<TConfig>::registerFactory("GS", new GaussSeidelSolverFactory<TConfig>);
     SolverFactory<TConfig>::registerFactory("POLYNOMIAL", new polynomial_solver::PolynomialSolverFactory<TConfig>);
     SolverFactory<TConfig>::registerFactory("KPZ_POLYNOMIAL", new KPZPolynomialSolverFactory<TConfig>);
@@ -166,6 +168,7 @@ inline void unregisterClasses()
     SolverFactory<TConfig>::unregisterFactory("BICGSTAB");
     SolverFactory<TConfig>::unregisterFactory("FGMRES");
     SolverFactory<TConfig>::unregisterFactory("JACOBI_L1");
+    SolverFactory<TConfig>::unregisterFactory("BITFSAI");
     SolverFactory<TConfig>::unregisterFactory("GS");
     SolverFactory<TConfig>::unregisterFactory("POLYNOMIAL");
     SolverFactory<TConfig>::unregisterFactory("KPZ_POLYNOMIAL");

@@ -44,6 +44,10 @@ set_target_properties(generate_poisson7_dist_renum PROPERTIES LINK_FLAGS "")
 target_include_directories(generate_poisson7_dist_renum PUBLIC ${AMGX_INCLUDES})
 # CMAKE_CUDA_ARCHITECTURES automatically inherits to all targets
 
+add_executable(bitfsai_mixed_pcg bitfsai_mixed_pcg.cu)
+target_link_libraries(bitfsai_mixed_pcg ${dyn_libs})
+target_include_directories(bitfsai_mixed_pcg PUBLIC ${AMGX_INCLUDES})
+
 if(MPI_FOUND)
     add_executable(amgx_mpi_capi amgx_mpi_capi.c )
     add_executable(amgx_mpi_capi_agg amgx_mpi_capi_agg.c )
