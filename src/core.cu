@@ -42,6 +42,7 @@
 //#include <solvers/jacobi_nocusp_solver.h>
 //#include <solvers/jacobi_solver.h>
 #include <solvers/jacobi_l1_solver.h>
+#include <solvers/bitfsai_solver.h>
 #include <solvers/gauss_seidel_solver.h>
 #include <solvers/block_jacobi_solver.h>
 #include <solvers/cf_jacobi_solver.h>
@@ -353,6 +354,14 @@ inline void registerParameters()
     AMG_Config::registerParameter<ColoringType>("boundary_coloring", "handling of boundary coloring for ILU solvers <ColoringType>", SYNC_COLORS, coloring_values);
     AMG_Config::registerParameter<ColoringType>("halo_coloring", "handling of halo coloring for ILU solvers <ColoringType>", LAST, coloring_values);
     AMG_Config::registerParameter<int>("use_sum_stopping_criteria", "Switch to use sum of all nodes rows to decide whether to stop coarsening, this allows some ranks to have 0 rows in classical AMG", 0);
+
+    // Register BitFSAI smoother parameters
+    std::vector<std::string> bitfsai_mode_values = {"int4_split", "fp4_e2m1", "fp16", "fp64"};
+    AMG_Config::registerParameter<std::string>("bitfsai_mode", "Factor weight encoding for BITFSAI smoother <int4_split|fp4_e2m1|fp16|fp64>", "int4_split", bitfsai_mode_values);
+    AMG_Config::registerParameter<double>("bitfsai_omega", "Damping factor for BITFSAI smoother <0.72>", 0.72);
+    AMG_Config::registerParameter<int>("bitfsai_max_patch", "Maximum local Cholesky patch size for BITFSAI smoother (0=auto, 1..16) <0>", 0);
+    AMG_Config::registerParameter<int>("bitfsai_safe_omega", "Cap BITFSAI damping using conservative upward-rounded Gershgorin bound 1/U_upper <0|1>", 0, bool_flag_values);
+    AMG_Config::registerParameter<int>("bitfsai_reproject", "Apply post-quantization 2x2 A-energy optimal re-projection for BITFSAI <0|1>", 1, bool_flag_values);
     //Register Data Format Parameters
     AMG_Config::registerParameter<int>("rhs_from_a", "a flag that asks the reader(requires reader support) that if  RHS vector was not found, generate it from the matrix (1: A*e where e=[1,…,1]^T, 0: b=[1,…,1]^T)", 0);
     AMG_Config::registerParameter<int>("complex_conversion", "a flag that asks the reader to convert complex system in the file to the one of the real-valued systems", 0);
@@ -609,6 +618,7 @@ struct registerClasses<T_Config, false>
         //Preconditioners
         SolverFactory<T_Config>::registerFactory("BLOCK_JACOBI", new block_jacobi_solver::BlockJacobiSolverFactory<T_Config>);
         SolverFactory<T_Config>::registerFactory("JACOBI_L1", new JacobiL1SolverFactory<T_Config>);
+        SolverFactory<T_Config>::registerFactory("BITFSAI", new BitFSAISolverFactory<T_Config>);
         SolverFactory<T_Config>::registerFactory("CF_JACOBI", new cf_jacobi_solver::CFJacobiSolverFactory<T_Config>);
         SolverFactory<T_Config>::registerFactory("GS", new GaussSeidelSolverFactory<T_Config>);
         SolverFactory<T_Config>::registerFactory("FIXCOLOR_GS", new fixcolor_gauss_seidel_solver::FixcolorGaussSeidelSolverFactory<T_Config>); //not exposed
